@@ -3,16 +3,6 @@
 from operator import methodcaller
 
 
-class Forwardable(type):
-
-    def __init__(cls, name, bases, dct):
-        super(Forwardable, cls).__init__(name, bases, dct)
-        delegation_defs = [(methodname, v) for (methodname, v) in dct.iteritems() if isinstance(v, (def_delegator, def_delegators, ))]
-        for methodname, delegator in delegation_defs:
-            delattr(cls, methodname)
-            delegator.apply_delegate_definition(cls, methodname)
-
-
 class def_delegator(object):
     __slots__ = ('accesor', 'proxy', )
 
@@ -68,3 +58,17 @@ class def_delegators(object):
             accesor_method = methodcaller(methodname, *args, **kw)
             return accesor_method(delegate_target)
         return _method
+
+
+class _Forwardable(type):
+
+    def __init__(cls, name, bases, dct):
+        super(_Forwardable, cls).__init__(name, bases, dct)
+        delegation_defs = [(methodname, v) for (methodname, v) in dct.iteritems() if isinstance(v, (def_delegator, def_delegators, ))]
+        for methodname, delegator in delegation_defs:
+            delattr(cls, methodname)
+            delegator.apply_delegate_definition(cls, methodname)
+
+
+class Forwardable(object):
+    __metaclass__ = _Forwardable

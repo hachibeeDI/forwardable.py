@@ -17,8 +17,7 @@ $ pip install https://github.com/hachibeeDI/forwardable/archive/master.zip
 
 ```python
 >>> from forwardable import Forwardable, def_delegator
->>> class Hoge(object):
-...     __metaclass__ = Forwardable
+>>> class Hoge(Forwardable):
 ...     startswith = def_delegator('aa')
 ...     endswith = def_delegator('aa')
 ...     balse = def_delegator('aa', 'replace')  # with proxy
@@ -41,8 +40,7 @@ False
 ```python
 
 >>> from forwardable import Forwardable, def_delegators
->>> class Foo(object):
-...     __metaclass__ = Forwardable
+>>> class Foo(Forwardable):
 ...     _ = def_delegators('aa', ('startswith', 'endswith', 'replace', ))
 ...
 ...     def __init__(self):
@@ -57,6 +55,30 @@ False
 'is it greeeeet hoge'
 
 ```
+
+
+### use with Metaclass
+
+```python
+
+>>> from forwardable import _Forwardable, def_delegators
+>>> class Foo(object):  # if PY3: class Foo(object, metaclass=_Forwardable):
+...     __metaclass__ = _Forwardable
+...     _ = def_delegators('aa', ('startswith', 'endswith', 'replace', ))
+...
+...     def __init__(self):
+...         self.aa = 'test hoge'
+
+>>> f = Foo()
+>>> f.startswith('test')
+True
+>>> f.endswith('test')
+False
+>>> f.replace('test', 'is it greeeeet')
+'is it greeeeet hoge'
+
+```
+
 
 ## Testing
 
