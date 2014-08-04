@@ -7,7 +7,7 @@ LICENSE = open(
     os.path.join(os.path.dirname(__file__), 'LICENSE')).read().strip()
 
 DESCRIPTION = open(
-    os.path.join(os.path.dirname(__file__), 'README.md')).read().strip()
+    os.path.join(os.path.dirname(__file__), 'README.rst')).read().strip()
 
 classifiers = [
     "Development Status :: 4 - Beta",
