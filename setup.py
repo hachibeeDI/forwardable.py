@@ -18,7 +18,7 @@ classifiers = [
 
 setup(
     name='forwardable.py',
-    version='0.0.11',
+    version='0.0.3',
     description='pythoniac port forwardable from Ruby',
     author='OGURA_Daiki',
     author_email='8hachibee125@gmail.com',
